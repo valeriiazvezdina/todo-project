@@ -50,7 +50,7 @@ router.get('/', UsersController.getUsers);
  * /api/users/register:
  *  post:
  *      description: Creates new user
- *     requestBody:
+ *      requestBody:
  *        description: sign up
  *        required: true
  *        content:
