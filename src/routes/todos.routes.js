@@ -55,17 +55,17 @@ router.get('/', authenticateToken, TodoController.getTodos);
  *      description: Adds new todo
  *      security:
  *        - bearerAuth: []
- *      parameters:
- *        - name: newTodo
- *          in: body
- *          description: new todo title
- *          required: true
- *          schema:
+ *      requestBody:
+ *        description: new todo
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
  *              type: object
  *              properties:
- *                  title:
- *                      type: string
- *                      description: todo's title
+ *                title: 
+ *                  type: string
+ *                  description: todo's title
  *      responses:
  *          '200':
  *              description: Successful response
@@ -89,19 +89,20 @@ router.post('/', authenticateToken, validationTodoBody, TodoController.addTodo);
  *        - bearerAuth: []
  *      parameters:
  *        - name: id
- *          in: param
+ *          in: path
  *          description: todo's id
  *          required: true
- *        - name: editedTodo
- *          in: body
- *          description: edited todo title
- *          required: true
- *          schema:
+ *      requestBody:
+ *        description: edited todo
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
  *              type: object
  *              properties:
- *                  title:
- *                      type: string
- *                      description: todo's title
+ *                title: 
+ *                  type: string
+ *                  description: todo's title
  *      responses:
  *          '200':
  *              description: Successful response
@@ -118,14 +119,14 @@ router.patch('/:id', authenticateToken, validationExistingId, validationTodoBody
 
 /**
  * @swagger
- * /api/todos/{id}:
+ * /api/todos/{id}/isCompleted:
  *  patch:
  *      description: Switches todo's isCompleted
  *      security:
  *        - bearerAuth: []
  *      parameters:
  *        - name: id
- *          in: param
+ *          in: path
  *          description: todo's isCompleted
  *          required: true
  *      responses:
@@ -151,7 +152,7 @@ router.patch('/:id/isCompleted', authenticateToken, validationExistingId, TodoCo
  *        - bearerAuth: []
  *      parameters:
  *        - name: id
- *          in: param
+ *          in: path
  *          description: deleted todo
  *          required: true
  *      responses:

@@ -50,20 +50,20 @@ router.get('/', UsersController.getUsers);
  * /api/users/register:
  *  post:
  *      description: Creates new user
- *      parameters:
- *        - name: newUser
- *          in: body
- *          description: new user body
- *          required: true
- *          schema:
+ *     requestBody:
+ *        description: sign up
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
  *              type: object
  *              properties:
- *                  email:
- *                      type: string
- *                      description: user's email
- *                  password:
- *                      type: string
- *                      description: user's password
+ *                email: 
+ *                  type: string
+ *                  description: user's email
+ *                password: 
+ *                  type: string
+ *                  description: user's password
  *      responses:
  *          '200':
  *              description: Successful response
@@ -79,20 +79,20 @@ router.post('/register', validationUserBody, validationUsedEmail, UsersControlle
  * /api/users/login:
  *  post:
  *      description: Signs in the user
- *      parameters:
- *        - name: user
- *          in: body
- *          description: user body
- *          required: true
- *          schema:
+ *      requestBody: 
+ *        description: sign in
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
  *              type: object
  *              properties:
- *                  email:
- *                      type: string
- *                      description: user's email
- *                  password:
- *                      type: string
- *                      description: user's password
+ *                email: 
+ *                  type: string
+ *                  description: user's email
+ *                password: 
+ *                  type: string
+ *                  description: user's password
  *      responses:
  *          '200':
  *              description: Successful response
