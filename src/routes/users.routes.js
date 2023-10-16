@@ -30,8 +30,77 @@ const validationUsedEmail = [
         })
 ];
 
+/**
+ * @swagger
+ * /api/users/:
+ *  get:
+ *      description: Returns all users
+ *      responses:
+ *          '200':
+ *              description: Successful response
+ *          '400':
+ *              description: Bad request
+ *          default:
+ *              description: Error 
+ */
 router.get('/', UsersController.getUsers);
+
+/**
+ * @swagger
+ * /api/users/register:
+ *  post:
+ *      description: Creates new user
+ *      parameters:
+ *        - name: newUser
+ *          in: body
+ *          description: new user body
+ *          required: true
+ *          schema:
+ *              type: object
+ *              properties:
+ *                  email:
+ *                      type: string
+ *                      description: user's email
+ *                  password:
+ *                      type: string
+ *                      description: user's password
+ *      responses:
+ *          '200':
+ *              description: Successful response
+ *          '400':
+ *              description: Bad request
+ *          default:
+ *              description: Error 
+ */
 router.post('/register', validationUserBody, validationUsedEmail, UsersController.createUser);
+
+/**
+ * @swagger
+ * /api/users/login:
+ *  post:
+ *      description: Signs in the user
+ *      parameters:
+ *        - name: user
+ *          in: body
+ *          description: user body
+ *          required: true
+ *          schema:
+ *              type: object
+ *              properties:
+ *                  email:
+ *                      type: string
+ *                      description: user's email
+ *                  password:
+ *                      type: string
+ *                      description: user's password
+ *      responses:
+ *          '200':
+ *              description: Successful response
+ *          '400':
+ *              description: Bad request
+ *          default:
+ *              description: Error 
+ */
 router.post('/login', validationUserBody, UsersController.login);
 
 module.exports = router;
