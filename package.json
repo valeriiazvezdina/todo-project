@@ -1,0 +1,42 @@
+{
+  "name": "todo-project",
+  "version": "1.0.0",
+  "description": "backend of the todo project",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/valeriiazvezdina/todo-project.git"
+  },
+  "keywords": [
+    "nodejs",
+    "node",
+    "js",
+    "express",
+    "bcrypt",
+    "validator",
+    "dotenv",
+    "swagger",
+    "docs",
+    "sentry"
+  ],
+  "author": "Valeriia Zvezdina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/valeriiazvezdina/todo-project/issues"
+  },
+  "homepage": "https://github.com/valeriiazvezdina/todo-project#readme",
+  "dependencies": {
+    "@sentry/node": "^7.73.0",
+    "@sentry/tracing": "^7.73.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.0.1",
+    "uuid": "^9.0.1"
+  }
+}
