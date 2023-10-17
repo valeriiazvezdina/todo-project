@@ -35,6 +35,8 @@ const validationUsedEmail = [
  * /api/users/:
  *  get:
  *      description: Returns all users
+ *      tags:
+ *        - Users
  *      responses:
  *          '200':
  *              description: Successful response
@@ -50,6 +52,8 @@ router.get('/', UsersController.getUsers);
  * /api/users/register:
  *  post:
  *      description: Creates new user
+ *      tags:
+ *        - Users
  *      requestBody:
  *        description: sign up
  *        required: true
@@ -79,6 +83,8 @@ router.post('/register', validationUserBody, validationUsedEmail, UsersControlle
  * /api/users/login:
  *  post:
  *      description: Signs in the user
+ *      tags:
+ *        - Users
  *      requestBody: 
  *        description: sign in
  *        required: true

@@ -32,6 +32,8 @@ const validationExistingId = [
  * /api/todos/:
  *  get:
  *      description: Returns all todos
+ *      tags:
+ *        - Todos
  *      security:
  *        - bearerAuth: []
  *      responses:
@@ -53,6 +55,8 @@ router.get('/', authenticateToken, TodoController.getTodos);
  * /api/todos/:
  *  post:
  *      description: Adds new todo
+ *      tags:
+ *        - Todos
  *      security:
  *        - bearerAuth: []
  *      requestBody:
@@ -85,6 +89,8 @@ router.post('/', authenticateToken, validationTodoBody, TodoController.addTodo);
  * /api/todos/{id}:
  *  patch:
  *      description: Edits todo
+ *      tags:
+ *        - Todos
  *      security:
  *        - bearerAuth: []
  *      parameters:
@@ -122,6 +128,8 @@ router.patch('/:id', authenticateToken, validationExistingId, validationTodoBody
  * /api/todos/{id}/isCompleted:
  *  patch:
  *      description: Switches todo's isCompleted
+ *      tags:
+ *        - Todos
  *      security:
  *        - bearerAuth: []
  *      parameters:
@@ -148,6 +156,8 @@ router.patch('/:id/isCompleted', authenticateToken, validationExistingId, TodoCo
  * /api/todos/{id}:
  *  delete:
  *      description: Deletes todo
+ *      tags:
+ *        - Todos
  *      security:
  *        - bearerAuth: []
  *      parameters:
