@@ -12,13 +12,8 @@ const SECRET_TOKEN = process.env.SECRET_TOKEN;
 class UsersController {
     async findEmail(email) {
         try {
-            let isUsed = false;
             const users = await UsersService.getUsers();
-            users.forEach(user => {
-                if (user.email === email) {
-                    isUsed = true;
-                }
-            });
+            const isUsed = users.some(user => user.email === email);
             return isUsed;
         } catch(err) {
             Sentry.captureException(err);
