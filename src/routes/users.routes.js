@@ -30,6 +30,16 @@ const validationUsedEmail = [
         })
 ];
 
+const validationNotExistingEmail = [
+    body('email')
+        .custom(async email => {
+            const isExisting = await UsersController.findEmail(email);
+            if (!isExisting) {
+                throw new Error('user does not exist');
+            }
+        })
+];
+
 /**
  * @swagger
  * /api/users/:
@@ -107,6 +117,6 @@ router.post('/register', validationUserBody, validationUsedEmail, UsersControlle
  *          default:
  *              description: Error 
  */
-router.post('/login', validationUserBody, UsersController.login);
+router.post('/login', validationNotExistingEmail, validationUserBody, UsersController.login);
 
 module.exports = router;

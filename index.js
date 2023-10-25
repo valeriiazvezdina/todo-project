@@ -55,7 +55,4 @@ app.use('/api', routes);
 /* Sentry handling errors */
 app.use(Sentry.Handlers.errorHandler());
 
-/* listening server */
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+module.exports = app;

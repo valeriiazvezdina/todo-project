@@ -63,7 +63,9 @@ class UsersController {
                         res.status(403).send('wrong password');
                     } else {
                         const token = jwt.sign(user, SECRET_TOKEN);
-                        res.status(200).send(token);
+                        res.status(200).send({
+                            token: token
+                        });
                     }
                 }
             } else {
