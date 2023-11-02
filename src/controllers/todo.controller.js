@@ -1,13 +1,12 @@
 const TodoService = require('../services/todo.service');
 const Sentry = require('@sentry/node');
 const { validationResult } = require('express-validator');
-const { v4: uuid } = require('uuid');
 
 class TodoController {
     async findTodoById(id) {
         try {
-            const todos = await TodoService.getTodos();
-            return todos.find(todo => todo.id === id);
+            const todo = await TodoService.getTodoById(id);
+            return !!todo;
         } catch(err) {
             Sentry.captureException(err);
         }
@@ -24,14 +23,14 @@ class TodoController {
         try {
             const result = validationResult(req);
             if (result.isEmpty()) {
-                const { idUser, title } = req.body;
-                const newTodo = {
-                    id: uuid(),
+                const { title } = req.body;
+                const idUser = req.idUser;
+                const todo = {
                     title: title,
                     isCompleted: false,
                     idUser: idUser
                 };
-                await TodoService.addTodo(newTodo);
+                const newTodo = await TodoService.addTodo(todo);
                 res.status(201).send(newTodo);
             } else {
                 res.status(400).send({

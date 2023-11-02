@@ -23,7 +23,7 @@ const validationUserBody = [
 const validationUsedEmail = [
     body('email')
         .custom(async email => {
-            const isExisting = await UsersController.findEmail(email);
+            const isExisting = await UsersController.isEmailExisting(email);
             if (isExisting) {
                 throw new Error('email is already used');
             }
@@ -33,7 +33,7 @@ const validationUsedEmail = [
 const validationNotExistingEmail = [
     body('email')
         .custom(async email => {
-            const isExisting = await UsersController.findEmail(email);
+            const isExisting = await UsersController.isEmailExisting(email);
             if (!isExisting) {
                 throw new Error('user does not exist');
             }

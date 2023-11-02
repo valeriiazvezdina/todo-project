@@ -13,7 +13,7 @@ const authenticateToken = (req, res, next) => {
                 if (err) {
                     res.status(403).send('access error');
                 } else {
-                    req.body.idUser = user.idUser;
+                    req.idUser = user.user._id;
                     next();
                 }
             })

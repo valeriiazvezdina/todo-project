@@ -121,7 +121,7 @@ router.post('/', authenticateToken, validationTodoBody, TodoController.addTodo);
  *          default:
  *              description: Error 
  */
-router.patch('/:id', authenticateToken, validationExistingId, validationTodoBody, TodoController.editTitle);
+router.patch('/:id', authenticateToken, validationTodoBody, TodoController.editTitle);
 
 /**
  * @swagger
@@ -149,7 +149,7 @@ router.patch('/:id', authenticateToken, validationExistingId, validationTodoBody
  *          default:
  *              description: Error 
  */
-router.patch('/:id/isCompleted', authenticateToken, validationExistingId, TodoController.editIsCompleted);
+router.patch('/:id/isCompleted', authenticateToken, TodoController.editIsCompleted);
 
 /**
  * @swagger
@@ -177,6 +177,6 @@ router.patch('/:id/isCompleted', authenticateToken, validationExistingId, TodoCo
  *          default:
  *              description: Error 
  */
-router.delete('/:id', authenticateToken, validationExistingId, TodoController.deleteTodo);
+router.delete('/:id', authenticateToken, TodoController.deleteTodo);
 
 module.exports = router;

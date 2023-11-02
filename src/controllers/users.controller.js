@@ -1,6 +1,5 @@
 const UsersService = require('../services/users.service');
 const Sentry = require('@sentry/node');
-const { v4: uuid } = require('uuid');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
@@ -10,11 +9,10 @@ const saltRounds = 10;
 const SECRET_TOKEN = process.env.SECRET_TOKEN;
 
 class UsersController {
-    async findEmail(email) {
+    async isEmailExisting(email) {
         try {
-            const users = await UsersService.getUsers();
-            const isUsed = users.some(user => user.email === email);
-            return isUsed;
+            const user = await UsersService.findUserByEmail(email);
+            return !!user;
         } catch(err) {
             Sentry.captureException(err);
         }
@@ -34,7 +32,6 @@ class UsersController {
                 const { email, password } = req.body;
                 const hashedPassword = await bcrypt.hash(password, saltRounds);
                 const newUser = await UsersService.createUser({
-                    idUser: uuid(),
                     email: email,
                     password: hashedPassword
                 });
@@ -53,8 +50,7 @@ class UsersController {
             const result = validationResult(req);
             if (result.isEmpty()) {
                 const { email, password } = req.body;
-                const users = await UsersService.getUsers();
-                const user = users.find(user => user.email === email);
+                const user = await UsersService.findUserByEmail(email);
                 if (!user) {
                     res.status(404).send('user with such email does not exist');
                 } else {
@@ -62,7 +58,7 @@ class UsersController {
                     if (!validate) {
                         res.status(403).send('wrong password');
                     } else {
-                        const token = jwt.sign(user, SECRET_TOKEN);
+                        const token = jwt.sign({ user }, SECRET_TOKEN);
                         res.status(200).send({
                             token: token
                         });
