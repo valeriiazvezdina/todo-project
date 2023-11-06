@@ -1,4 +1,4 @@
-const Todo = require('../../mongo-db/models/todo.model');
+const Todo = require('../models/todo.model');
 
 class TodoService {
     async getTodoById(id) {

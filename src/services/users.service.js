@@ -1,4 +1,4 @@
-const User = require('../../mongo-db/models/user.model');
+const User = require('../models/user.model');
 
 class UsersService {
     async getUsers() {
