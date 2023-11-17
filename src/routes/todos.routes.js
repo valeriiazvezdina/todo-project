@@ -18,9 +18,6 @@ const validationExistingId = [
         .notEmpty()
         .withMessage('id must be provided')
         .bail()
-        .isUUID()
-        .withMessage('id must be uuid')
-        .bail()
         .custom(async id => {
             const isExisting = await TodoController.findTodoById(id);
             if (!isExisting) throw new Error('not found todo with such id');

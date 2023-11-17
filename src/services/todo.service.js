@@ -4,6 +4,11 @@ class TodoService {
     async getTodos() {
         return await todoModel.findAll();
     }
+    async getTodoById(id) {
+        return await todoModel.findOne({ raw: true, where: {
+            id: id
+        }});
+    }
     async addTodo(todo) {
         return todoModel.create({ 
             title: todo.title,
@@ -22,7 +27,9 @@ class TodoService {
         const todo = await todoModel.findOne({ raw: true, where: {
             id: id
         }});
-        return await todoModel.update({ isCompleted: !todo.isCompleted })
+        return await todoModel.update({ isCompleted: !todo.isCompleted }, { where: {
+            id: id
+        }});
     }
     async deleteTodo(id) {
         return await todoModel.destroy({ where: {

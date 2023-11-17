@@ -6,8 +6,7 @@ const { v4: uuid } = require('uuid');
 class TodoController {
     async findTodoById(id) {
         try {
-            const todos = await TodoService.getTodos();
-            return todos.find(todo => todo.id === id);
+            return await TodoService.getTodoById(id);
         } catch(err) {
             Sentry.captureException(err);
         }
@@ -25,7 +24,6 @@ class TodoController {
             const result = validationResult(req);
             if (result.isEmpty()) {
                 const { idUser, title } = req.body;
-                console.log(idUser)
                 const newTodo = {
                     title: title,
                     isCompleted: false,
