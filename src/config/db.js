@@ -18,7 +18,6 @@ async function testDbConnection() {
     }
 }
 
-/* creating an instance of Sequelize */
 module.exports = {
     sequelize,
     testDbConnection

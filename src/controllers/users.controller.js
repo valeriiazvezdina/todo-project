@@ -34,7 +34,6 @@ class UsersController {
                 const { email, password } = req.body;
                 const hashedPassword = await bcrypt.hash(password, saltRounds);
                 const newUser = await UsersService.createUser({
-                    idUser: uuid(),
                     email: email,
                     password: hashedPassword
                 });
@@ -53,8 +52,7 @@ class UsersController {
             const result = validationResult(req);
             if (result.isEmpty()) {
                 const { email, password } = req.body;
-                const users = await UsersService.getUsers();
-                const user = users.find(user => user.email === email);
+                const user = await UsersService.getUserByEmail(email);
                 if (!user) {
                     res.status(404).send('user with such email does not exist');
                 } else {

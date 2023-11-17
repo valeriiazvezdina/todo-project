@@ -25,8 +25,8 @@ class TodoController {
             const result = validationResult(req);
             if (result.isEmpty()) {
                 const { idUser, title } = req.body;
+                console.log(idUser)
                 const newTodo = {
-                    id: uuid(),
                     title: title,
                     isCompleted: false,
                     idUser: idUser

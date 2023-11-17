@@ -3,12 +3,12 @@ const { DataTypes } = require('sequelize');
 const userModel = require('./user.model');
 
 const todoModel = sequelize.define(
-    'todo',
+    'todos',
     {
         id: {
             type: DataTypes.INTEGER,
+            autoIncrement: true,
             allowNull: false,
-            unique: true,
             primaryKey: true
         },
         title: {
@@ -19,7 +19,7 @@ const todoModel = sequelize.define(
             type: DataTypes.BOOLEAN,
             allowNull: false
         },
-        user_id: {
+        idUser: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
