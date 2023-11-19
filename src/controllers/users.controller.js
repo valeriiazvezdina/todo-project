@@ -1,6 +1,5 @@
 const UsersService = require('../services/users.service');
 const Sentry = require('@sentry/node');
-const { v4: uuid } = require('uuid');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
@@ -12,9 +11,7 @@ const SECRET_TOKEN = process.env.SECRET_TOKEN;
 class UsersController {
     async findEmail(email) {
         try {
-            const users = await UsersService.getUsers();
-            const isUsed = users.some(user => user.email === email);
-            return isUsed;
+            return await UsersService.getUserByEmail(email);
         } catch(err) {
             Sentry.captureException(err);
         }

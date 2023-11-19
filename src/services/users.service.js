@@ -7,7 +7,7 @@ class UsersService {
     async createUser(user) {
         return await userModel.create({ 
             email: user.email,
-            password: user.password 
+            password: user.password
         });
     }
     async getUserByEmail(email) {

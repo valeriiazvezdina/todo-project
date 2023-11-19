@@ -1,7 +1,6 @@
 const TodoService = require('../services/todo.service');
 const Sentry = require('@sentry/node');
 const { validationResult } = require('express-validator');
-const { v4: uuid } = require('uuid');
 
 class TodoController {
     async findTodoById(id) {
@@ -13,7 +12,8 @@ class TodoController {
     }
     async getTodos(req, res) {
         try {
-            const todos = await TodoService.getTodos();
+            const idUser = req.body.idUser;
+            const todos = await TodoService.getTodos(idUser);
             res.status(200).send(todos);
         } catch(err) {
             Sentry.captureException(err);

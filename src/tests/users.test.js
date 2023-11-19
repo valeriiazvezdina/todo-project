@@ -11,24 +11,24 @@ describe('CRUD endpoints', () => {
     describe('POST /api/users/login', () => {
         test('should respond with a 200 status code', async () => {
             const user = {
-                email: 'admin@admin.admin',
-                password: '123456789'
+                email: 'mail@mail.com',
+                password: 'password'
             };
             const response = await request(app).post('/api/users/login').send(user);
             expect(response.statusCode).toBe(200);
         });
         test('should respond with a 403 status code', async () => {
             const user = {
-                email: 'admin@admin.admin',
-                password: 'password'
+                email: 'mail@mail.com',
+                password: 'wrong-password'
             };
             const response = await request(app).post('/api/users/login').send(user);
             expect(response.statusCode).toBe(403);
         });
         test('should return a token', async () => {
             const user = {
-                email: 'admin@admin.admin',
-                password: '123456789'
+                email: 'mail@mail.com',
+                password: 'password'
             };
             const response = await request(app).post('/api/users/login').send(user);
             expect(response.body.token).toBeDefined();
@@ -53,8 +53,8 @@ describe('CRUD endpoints', () => {
         });
         test('should return status code 400', async () => {
             const user = {
-                email: 'test@test.test',
-                password: '123456789'
+                email: 'mail@mail.com',
+                password: 'password'
             };
             const response = await request(app).post('/api/users/register').send(user);
             expect(response.statusCode).toBe(400);

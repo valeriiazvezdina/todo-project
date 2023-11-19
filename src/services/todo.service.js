@@ -1,8 +1,10 @@
 const { todoModel } = require('../models/models');
 
 class TodoService {
-    async getTodos() {
-        return await todoModel.findAll();
+    async getTodos(idUser) {
+        return await todoModel.findAll({ raw: true, where: {
+            idUser: idUser
+        }});
     }
     async getTodoById(id) {
         return await todoModel.findOne({ raw: true, where: {
