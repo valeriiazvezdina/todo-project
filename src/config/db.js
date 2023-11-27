@@ -1,9 +1,23 @@
 const { Sequelize } = require('sequelize');
 
+/**
+ * Connection to local DB
+ */
+// const sequelize = new Sequelize(
+//     process.env.DB_NAME,
+//     process.env.DB_USER,
+//     process.env.DB_PASSWORD,
+//     {
+//       host: process.env.DB_HOST,
+//       dialect: 'postgres'
+//     }
+// );
+
+/**
+ * Connection to DB in render.com
+ */
 const sequelize = new Sequelize(
-    process.env.DB_NAME,
-    process.env.DB_USER,
-    process.env.DB_PASSWORD,
+    'postgres://zvezdval:Y3Ua8Pn2Xu9VrlzWeYGPibxe7E61DUjr@dpg-clf2dufjc5ks7393hoog-a.frankfurt-postgres.render.com/postgres_4rpy?ssl=true',
     {
       host: process.env.DB_HOST,
       dialect: 'postgres'
