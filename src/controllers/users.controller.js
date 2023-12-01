@@ -9,13 +9,6 @@ const saltRounds = 10;
 const SECRET_TOKEN = process.env.SECRET_TOKEN;
 
 class UsersController {
-    async findEmail(email) {
-        try {
-            return await UsersService.getUserByEmail(email);
-        } catch(err) {
-            Sentry.captureException(err);
-        }
-    }
     async getUsers(req, res) {
         try {
             const users = await UsersService.getUsers();
@@ -29,12 +22,19 @@ class UsersController {
             const result = validationResult(req);
             if (result.isEmpty()) {
                 const { email, password } = req.body;
-                const hashedPassword = await bcrypt.hash(password, saltRounds);
-                const newUser = await UsersService.createUser({
-                    email: email,
-                    password: hashedPassword
-                });
-                res.status(201).send(newUser);
+                const user = await UsersService.getUserByEmail(email);
+                if (!user) {
+                    const hashedPassword = await bcrypt.hash(password, saltRounds);
+                    const newUser = await UsersService.createUser({
+                        email: email,
+                        password: hashedPassword
+                    });
+                    res.status(201).send(newUser);
+                } else {
+                    res.status(400).send({
+                        errors: 'user with such email already exists'
+                    });
+                }
             } else {
                 res.status(400).send({
                     errors: result.array()
@@ -51,7 +51,9 @@ class UsersController {
                 const { email, password } = req.body;
                 const user = await UsersService.getUserByEmail(email);
                 if (!user) {
-                    res.status(404).send('user with such email does not exist');
+                    res.status(404).send({
+                        errors: 'user with such email does not exist'
+                    });
                 } else {
                     const validate = await bcrypt.compare(password, user.password);
                     if (!validate) {

@@ -20,26 +20,6 @@ const validationUserBody = [
         .withMessage('password length must be at least 5 characters')
 ];
 
-const validationUsedEmail = [
-    body('email')
-        .custom(async email => {
-            const isExisting = await UsersController.findEmail(email);
-            if (isExisting) {
-                throw new Error('email is already used');
-            }
-        })
-];
-
-const validationNotExistingEmail = [
-    body('email')
-        .custom(async email => {
-            const isExisting = await UsersController.findEmail(email);
-            if (!isExisting) {
-                throw new Error('user does not exist');
-            }
-        })
-];
-
 /**
  * @swagger
  * /api/users/:
@@ -86,7 +66,7 @@ router.get('/', UsersController.getUsers);
  *          default:
  *              description: Error 
  */
-router.post('/register', validationUserBody, validationUsedEmail, UsersController.createUser);
+router.post('/register', validationUserBody, UsersController.createUser);
 
 /**
  * @swagger
@@ -117,6 +97,6 @@ router.post('/register', validationUserBody, validationUsedEmail, UsersControlle
  *          default:
  *              description: Error 
  */
-router.post('/login', validationNotExistingEmail, validationUserBody, UsersController.login);
+router.post('/login', validationUserBody, UsersController.login);
 
 module.exports = router;

@@ -46,8 +46,15 @@ class TodoController {
             if (result.isEmpty()) {
                 const id = req.params.id;
                 const title = req.body.title;
-                const newTodo = await TodoService.editTitle(id, title);
-                res.status(200).send(newTodo);
+                const idExists = await TodoService.getTodoById(id);
+                if (idExists) {
+                    const newTodo = await TodoService.editTitle(id, title);
+                    res.status(200).send(newTodo);
+                } else {
+                    res.status(404).send({
+                        errors: 'todo with such id does not exist'
+                    });
+                }
             } else {
                 res.status(400).send({
                     errors: result.array()
@@ -62,7 +69,15 @@ class TodoController {
             const result = validationResult(req);
             if (result.isEmpty()) {
                 const id = req.params.id;
-                const newTodo = await TodoService.editIsCompleted(id);
+                const idExists = await TodoService.getTodoById(id);
+                if (idExists) {
+                    const newTodo = await TodoService.editIsCompleted(id);
+                    res.status(200).send(newTodo);
+                } else {
+                    res.status(404).send({
+                        errors: 'todo with such id does not exist'
+                    });
+                }
                 res.status(200).send(newTodo);
             } else {
                 res.status(400).send({
@@ -78,7 +93,15 @@ class TodoController {
             const result = validationResult(req);
             if (result.isEmpty()) {
                 const id = req.params.id;
-                await TodoService.deleteTodo(id);
+                const idExists = await TodoService.getTodoById(id);
+                if (idExists) {
+                    await TodoService.deleteTodo(id);
+                    res.status(200).send(newTodo);
+                } else {
+                    res.status(404).send({
+                        errors: 'todo with such id does not exist'
+                    });
+                }
                 res.status(200).send(true);
             } else {
                 res.status(400).send({

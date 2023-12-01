@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const TodoController = require('../controllers/todo.controller');
-const { body, param } = require('express-validator');
+const { body, header } = require('express-validator');
 const authenticateToken = require('../helpers/authenticate');
 
 const validationTodoBody = [
@@ -13,15 +13,10 @@ const validationTodoBody = [
         .withMessage('title must be a string')
 ];
 
-const validationExistingId = [
-    param('id')
+const validationTokenProvided = [
+    header('authorization')
         .notEmpty()
-        .withMessage('id must be provided')
-        .bail()
-        .custom(async id => {
-            const isExisting = await TodoController.findTodoById(id);
-            if (!isExisting) throw new Error('not found todo with such id');
-        })
+        .withMessage('token must be provided')
 ];
 
 /**
@@ -45,7 +40,7 @@ const validationExistingId = [
  *          default:
  *              description: Error 
  */
-router.get('/', authenticateToken, TodoController.getTodos);
+router.get('/', validationTokenProvided, authenticateToken, TodoController.getTodos);
 
 /**
  * @swagger
@@ -118,7 +113,7 @@ router.post('/', authenticateToken, validationTodoBody, TodoController.addTodo);
  *          default:
  *              description: Error 
  */
-router.patch('/:id', authenticateToken, validationExistingId, validationTodoBody, TodoController.editTitle);
+router.patch('/:id', authenticateToken, validationTodoBody, TodoController.editTitle);
 
 /**
  * @swagger
@@ -146,7 +141,7 @@ router.patch('/:id', authenticateToken, validationExistingId, validationTodoBody
  *          default:
  *              description: Error 
  */
-router.patch('/:id/isCompleted', authenticateToken, validationExistingId, TodoController.editIsCompleted);
+router.patch('/:id/isCompleted', authenticateToken, TodoController.editIsCompleted);
 
 /**
  * @swagger
@@ -174,6 +169,6 @@ router.patch('/:id/isCompleted', authenticateToken, validationExistingId, TodoCo
  *          default:
  *              description: Error 
  */
-router.delete('/:id', authenticateToken, validationExistingId, TodoController.deleteTodo);
+router.delete('/:id', authenticateToken, TodoController.deleteTodo);
 
 module.exports = router;
