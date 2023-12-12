@@ -14,9 +14,13 @@ const validationTodoBody = [
 ];
 
 const validationTokenProvided = [
-    header('authorization')
+    header('Authorization')
         .notEmpty()
         .withMessage('token must be provided')
+        .bail()
+        .customSanitizer(value => value.split(' ')[1])
+        .isJWT()
+        .withMessage('inalid token')
 ];
 
 /**

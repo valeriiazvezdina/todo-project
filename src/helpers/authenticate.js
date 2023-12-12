@@ -7,7 +7,7 @@ const authenticateToken = (req, res, next) => {
         const authenticateHeaders = req.headers.authorization;
         const token = authenticateHeaders?.split(' ')[1];
         if (!token) {
-            res.status(401).send('token must be provided');
+            res.status(401).send('for authorization token must be provided');
         } else {
             jwt.verify(token, process.env.SECRET_TOKEN, (err, user) => {
                 if (err) {
