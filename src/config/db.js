@@ -1,14 +1,16 @@
 const { Sequelize } = require('sequelize');
 
+require('dotenv').config();
+
 /**
  * Connection to local DB
  */
 // const sequelize = new Sequelize(
-//     process.env.DB_NAME,
-//     process.env.DB_USER,
-//     process.env.DB_PASSWORD,
+//     process.env.DB_NAME_LOCAL,
+//     process.env.DB_USER_LOCAL,
+//     process.env.DB_PASSWORD_LOCAL,
 //     {
-//       host: process.env.DB_HOST,
+//       host: process.env.DB_HOST_LOCAL,
 //       dialect: 'postgres'
 //     }
 // );
@@ -17,9 +19,8 @@ const { Sequelize } = require('sequelize');
  * Connection to DB in render.com
  */
 const sequelize = new Sequelize(
-    'postgres://zvezdval:Y3Ua8Pn2Xu9VrlzWeYGPibxe7E61DUjr@dpg-clf2dufjc5ks7393hoog-a.frankfurt-postgres.render.com/postgres_4rpy?ssl=true',
+    `${process.env.DB_USER_REMOTE}://${process.env.DB_USERNAME_REMOTE}:${process.env.DB_PASSWORD_REMOTE}@${process.env.DB_HOST_REMOTE}/${process.env.DB_NAME_REMOTE}?ssl=true`,
     {
-      host: process.env.DB_HOST,
       dialect: 'postgres'
     }
 );

@@ -13,16 +13,6 @@ const validationTodoBody = [
         .withMessage('title must be a string')
 ];
 
-const validationTokenProvided = [
-    header('Authorization')
-        .notEmpty()
-        .withMessage('token must be provided')
-        .bail()
-        .customSanitizer(value => value.split(' ')[1])
-        .isJWT()
-        .withMessage('inalid token')
-];
-
 /**
  * @swagger
  * /api/todos/:
@@ -44,7 +34,7 @@ const validationTokenProvided = [
  *          default:
  *              description: Error 
  */
-router.get('/', validationTokenProvided, authenticateToken, TodoController.getTodos);
+router.get('/', authenticateToken, TodoController.getTodos);
 
 /**
  * @swagger
