@@ -96,7 +96,6 @@ class TodoController {
                 const idExists = await TodoService.getTodoById(id);
                 if (idExists) {
                     await TodoService.deleteTodo(id);
-                    res.status(200).send(newTodo);
                 } else {
                     res.status(404).send({
                         errors: 'todo with such id does not exist'
