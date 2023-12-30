@@ -4,8 +4,8 @@ class TodoService {
     async getTodoById(id) {
         return await Todo.findById(id);
     }
-    async getTodos() {
-        return await Todo.find();
+    async getTodos(idUser) {
+        return await Todo.find({ idUser: idUser });
     }
     async addTodo(todo) {
         return await Todo.create(todo);

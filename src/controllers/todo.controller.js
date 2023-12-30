@@ -13,7 +13,8 @@ class TodoController {
     }
     async getTodos(req, res) {
         try {
-            const todos = await TodoService.getTodos();
+            const idUser = req.idUser;
+            const todos = await TodoService.getTodos(idUser);
             res.status(200).send(todos);
         } catch(err) {
             Sentry.captureException(err);
