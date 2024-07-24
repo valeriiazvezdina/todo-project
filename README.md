@@ -28,4 +28,4 @@ npm start
 4. Now you can go to `http://localhost:YOUR_PORT_FROM_ENV_FILE/api-docs` and enjoy the app with comfortable Swagger docs.
 
 ## Deployment
-The application is deployed in Render.com[https://dashboard.render.com/] on the link <https://todo-project-416f.onrender.com>.
+The application is deployed in Render.com on the link <https://todo-project-416f.onrender.com>.
